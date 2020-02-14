@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Club Events</title>
+</head>
+<body>
+
+{% if user.is_authenticated  %}
+      {{ user.username }}
+        <a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}">Log Out</a>
+      <form id="logout" method="POST" action="{% url 'logout' %}">
+          {% csrf_token  %}
+          <input type="hidden" >
+      </form>
+        {% else %}
+        <a class="nav-item nav-link" href="{% url 'signUP'  %}">Sign Up</a>
+      <a class="nav-item nav-link" href="{% url 'login'   %}">Log in</a>
+{% endif %}
+
+
+</body>
+</html>

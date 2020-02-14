@@ -1,0 +1,44 @@
+{%load socialaccount%}
+{% providers_media_js%}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{user}}</title>
+</head>
+<body>
+
+{% if error %}
+{{error}}
+<br>
+<br>
+{% endif %}
+
+
+    <h1>Log in</h1>
+
+<form method="POST" action="{% url 'login'  %}">
+    {% csrf_token  %}
+    Username:
+    <br>
+    <input type="text" name="username"></input>
+    <br>
+    Password:
+    <br>
+    <input type="password" name="password"></input>
+    <br>
+      <br>
+    <input class="btn btn-primary" type="submit" value="Log in"></input>
+</form>
+
+
+    <button><a href="{% provider_login_url 'google' %}">Google Login</a></button>
+    <button><a href="{% provider_login_url 'facebook' method='oauth2' %}">Facebook Login</a></button>
+
+<h1>Don't have an account </h1>
+<a href="{% url 'signUP' %}">Sign UP</a>
+</body>
+</html>
