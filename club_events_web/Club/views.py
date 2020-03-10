@@ -43,25 +43,11 @@ def club(request,club_name):
     for see_more in elem_see_mores:
         see_more.click()
 
-    # posts = ([])
-    # elem_posts = driver.find_elements_by_class_name("_5pbx")
-    # for post in elem_posts:
-    #     tmp = []
-    #     title = post.text.split("\n")
-    #     for tit in title:
-    #         tmp.append(tit)
-    #     posts.append(tmp);
-
-    # if not elem_posts:
-    #     print("Nothing to show.")
-
-
     elem_full = driver.find_elements_by_class_name("_5pcr")
 
     data={}
     for elem in elem_full:
         tmp = elem.find_element_by_class_name("timestampContent")
-        # time_stamp.append(tmp.text)
         content=elem.find_element_by_class_name("_5pbx")
         tmp2 = []
         title = content.text.split("\n")
@@ -104,3 +90,18 @@ def club(request,club_name):
     # element_to_be_clickable
     # element = WebDriverWait(driver,30)
     # continue_link = driver.find_elements_by_link_text('See More')
+
+
+# This was the older code for post context retrieval then to add time stamp the new one was added
+    # posts = ([])
+    # elem_posts = driver.find_elements_by_class_name("_5pbx")
+    # for post in elem_posts:
+    #     tmp = []
+    #     title = post.text.split("\n")
+    #     for tit in title:
+    #         tmp.append(tit)
+    #     posts.append(tmp);
+
+    # if not elem_posts:
+    #     print("Nothing to show.")
+
