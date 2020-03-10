@@ -12,7 +12,7 @@ import time
 @login_required(login_url="/accounts")
 def club(request,club_name):
 
-    driver = webdriver.Firefox(executable_path='/home/sourav18a/Downloads/geckodriver')
+    driver = webdriver.Firefox()
 
     driver.get("http://www.facebook.com")
 
@@ -43,20 +43,34 @@ def club(request,club_name):
     for see_more in elem_see_mores:
         see_more.click()
 
-    posts = ([])
-    elem_posts = driver.find_elements_by_class_name("_5pbx")
-    for post in elem_posts:
-        tmp = []
-        title = post.text.split("\n")
-        for tit in title:
-            tmp.append(tit)
-        posts.append(tmp);
+    # posts = ([])
+    # elem_posts = driver.find_elements_by_class_name("_5pbx")
+    # for post in elem_posts:
+    #     tmp = []
+    #     title = post.text.split("\n")
+    #     for tit in title:
+    #         tmp.append(tit)
+    #     posts.append(tmp);
 
-    if not elem_posts:
-        print("Nothing to show.")
+    # if not elem_posts:
+    #     print("Nothing to show.")
+
+
+    elem_full = driver.find_elements_by_class_name("_5pcr")
+
+    data={}
+    for elem in elem_full:
+        tmp = elem.find_element_by_class_name("timestampContent")
+        # time_stamp.append(tmp.text)
+        content=elem.find_element_by_class_name("_5pbx")
+        tmp2 = []
+        title = content.text.split("\n")
+        for tit in title:
+            tmp2.append(tit)
+        data[tmp.text]=tmp2
 
     driver.close()
-    return render(request, 'css_post.html', {'posts': posts, 'club_name':club_name})
+    return render(request, 'css_post.html', {'posts': data, 'club_name':club_name})
 
 
 # Different methods of waiting in selenium
