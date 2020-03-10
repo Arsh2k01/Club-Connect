@@ -1,0 +1,29 @@
+{% extends 'css_base.html' %}
+{% load static %}
+
+{% block include %}
+    <link rel="stylesheet" type="text/css" href="{% static "posts/post_css.css" %}">
+{% endblock %}
+
+{% block title %}
+  {{club_name}}
+{% endblock %}
+
+{% block content %}
+    <div style="margin-top:150px">
+        {% for post in posts %}
+            <div class="row m-40 p-10">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8 p-5 card">
+                <div class="container bg-light display-4" >
+                        {% for lines in post %}
+                            {{ lines }}<br>
+                        {% endfor %}
+                </div>
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+            <br><br>
+        {% endfor %}
+    </div>
+{% endblock %}

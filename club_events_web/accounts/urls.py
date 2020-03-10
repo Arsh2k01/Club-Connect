@@ -4,5 +4,5 @@ urlpatterns = [
     path('', include('allauth.urls')),
     path('', views.login, name="login"),
     path('signUP/', views.signUP, name="signUP"),
-    path('logout/', views.signUP, name="logout"),
+    path('logout2/', views.logout2, name="logout2"),
 ]

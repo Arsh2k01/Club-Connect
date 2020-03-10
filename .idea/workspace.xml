@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b45a1090-1803-4126-8768-f17ef70c8e6f" name="Default Changelist" comment="" />
+    <list default="true" id="b45a1090-1803-4126-8768-f17ef70c8e6f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/club_events_web/Club/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/club_events_web/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/club_events_web/accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/club_events_web/accounts/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/club_events_web/club_events_web/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/club_events_web/club_events_web/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/club_events_web/club_events_web/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/club_events_web/club_events_web/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/club_events_web/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/club_events_web/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/club_events_web/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/club_events_web/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/club_events_web/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/club_events_web/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/club_events_web/templates/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/club_events_web/templates/signup.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +27,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1XidxiCGKHPPeotrObmsLdpT6A5" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -24,6 +40,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SvnConfiguration">
@@ -44,9 +61,13 @@
       <screen x="88" y="27" width="1832" height="1053" />
     </state>
     <state x="700" y="357" width="598" height="390" key="#com.intellij.fileTypes.FileTypeChooser/88.27.1832.1053@88.27.1832.1053" timestamp="1581535526665" />
-    <state x="660" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1581673039683">
+    <state x="660" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1583773185939">
       <screen x="88" y="27" width="1832" height="1053" />
     </state>
-    <state x="660" y="380" key="com.intellij.ide.util.TipDialog/88.27.1832.1053@88.27.1832.1053" timestamp="1581673039683" />
+    <state x="660" y="380" key="com.intellij.ide.util.TipDialog/88.27.1832.1053@88.27.1832.1053" timestamp="1583773185939" />
+    <state x="667" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1583778017719">
+      <screen x="88" y="27" width="1832" height="1053" />
+    </state>
+    <state x="667" y="257" width="672" height="678" key="search.everywhere.popup/88.27.1832.1053@88.27.1832.1053" timestamp="1583778017719" />
   </component>
 </project>

@@ -6,5 +6,5 @@ from django.contrib import auth
 
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'css_home.html')
 
