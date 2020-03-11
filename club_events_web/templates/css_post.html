@@ -18,7 +18,12 @@
                 <div class="container bg-light display-4" >
                     <h3>Posted on: {{time_stamp}}</h3><br>
                         {% for lines in post %}
-                            {{ lines }}<br>
+                            {% if "http" in lines %}
+                            <a href="{{lines}}">{{lines}}</a>
+                            {% else%}
+                                {{ lines }}
+                            {% endif %}
+                            <br>
                         {% endfor %}
                 </div>
                 </div>

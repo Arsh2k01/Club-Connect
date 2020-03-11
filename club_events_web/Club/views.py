@@ -6,13 +6,27 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 from django.contrib.auth.decorators import login_required
+from .models import *
 import time
+
+CLUB_NAME = {
+
+    'codingclubiitg':'Coding Club',
+    'robotics.iitg':'Robotics',
+    'electronics.iitg':'Electronics',
+    'Aeroiitg':'Aeromodelling',
+    'litsociitg':'LitSoc',
+    'iitgai':'IITG.AI',
+    'xpressionsiitg':'Xpressions',
+    'cadence.iitg':'Cadence',
+}
 
 @login_required(login_url="/accounts")
 def club(request,club_name):
 
-    driver = webdriver.Firefox()
+    driver = webdriver.Firefox(executable_path="/home/sourav18a/Downloads/geckodriver")
 
     driver.get("http://www.facebook.com")
 
@@ -44,19 +58,31 @@ def club(request,club_name):
         see_more.click()
 
     elem_full = driver.find_elements_by_class_name("_5pcr")
-
+    club_oname = CLUB_NAME[club_name]
+    # posts = Post.objects.filter(club_name=club_oname)
     data={}
     for elem in elem_full:
         tmp = elem.find_element_by_class_name("timestampContent")
-        content=elem.find_element_by_class_name("_5pbx")
-        tmp2 = []
-        title = content.text.split("\n")
-        for tit in title:
-            tmp2.append(tit)
-        data[tmp.text]=tmp2
+
+        # check if post has content (whether its an only image post)
+        try:
+            elem.find_element_by_class_name("_5pbx")
+            content=elem.find_element_by_class_name("_5pbx")
+            tmp2 = []
+            title = content.text.split("\n")
+            for tit in title:
+                tmp2.append(tit)
+            s="\n";
+            s = s.join(tmp2)
+            print(s)
+            data[tmp.text]=tmp2
+        except NoSuchElementException:
+            continue
+
 
     driver.close()
-    return render(request, 'css_post.html', {'posts': data, 'club_name':club_name})
+
+    return render(request, 'css_post.html', {'posts': data, 'club_name':club_oname})
 
 
 # Different methods of waiting in selenium
@@ -104,4 +130,18 @@ def club(request,club_name):
 
     # if not elem_posts:
     #     print("Nothing to show.")
+
+# This code was used for psot,time_stamp retrieval from main post div but some posts did not have sub div of text _5pbx so try/except was added
+        # content=elem.find_element_by_class_name("_5pbx")
+        # if not content:
+        #     continue
+        # print('content above\n')
+        # tmp2 = []
+        # title = content.text.split("\n")
+        # for tit in title:
+        #     tmp2.append(tit)
+        #     # print(tit)
+        #     # print('\n')
+        # data[tmp.text]=tmp2
+        # print('\n\n\n')
 
