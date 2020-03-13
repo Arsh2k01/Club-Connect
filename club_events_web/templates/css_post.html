@@ -10,6 +10,25 @@
 {% endblock %}
 
 {% block content %}
+
+<div style="margin-top:150px">
+    <div class="row m-40 p-10">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4 p-5 card">
+        <div class="container bg-light display-4" >{{club_name}}</div>
+        </div>
+        <div class="col-sm-1 p-5 card">
+            <div class="container bg-light display-4" ><img src="{% static club_photo %}" class="img-fluid"></div>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2 p-5 card">
+        <div class="container bg-light display-4" ><a href="{% url 'club_scrape' club_rel %}" >Update Now</a></div>
+        </div>
+        </div>
+        <div class="col-sm-2"></div>
+        </div>
+    </div>
+    <br>
     <div style="margin-top:150px">
         {% for post in posts %}
             <div class="row m-40 p-10">

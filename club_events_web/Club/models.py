@@ -14,7 +14,7 @@ CLUB_CHOICES=[
 ]
 class Club(models.Model):
 
-    club_name = models.CharField(max_length=50)
+    club_name = models.CharField(max_length=50, choices=CLUB_CHOICES)
     club_secy = models.CharField(max_length=50)
 
     def __str__(self):

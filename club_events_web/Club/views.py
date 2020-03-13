@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,reverse
 from django.contrib.auth.models import User
 from django.contrib import auth
 from selenium import webdriver
@@ -23,19 +23,31 @@ CLUB_NAMES = {
     'cadence.iitg':'Cadence',
 }
 
+CLUB_PHOTO = {
+    "codingclubiitg":"club_photo/CodingClub.jpg",
+    'robotics.iitg':"club_photo/robotics_club.png",
+    'electronics.iitg':"club_photo/electronics_club.png",
+    'Aeroiitg':"club_photo/aeromodelling_club.jpg",
+    'litsociitg':"club_photo/litsoc.jpg",
+    'iitgai':"club_photo/ai.jpg",
+    'xpressionsiitg':"club_photo/xpression.png",
+    'cadence.iitg':"club_photo/cadence.jpg",
+}
+
 @login_required(login_url="/accounts")
 def club_posts(request,club_name):
 
+    club_photo = CLUB_PHOTO[club_name]
     club_oname  = CLUB_NAMES[club_name]
     posts       = Post.objects.filter(club_name__club_name = club_oname)
-    return render(request,'css_post.html', {'posts': posts, 'club_name':club_oname})
+    return render(request,'css_post.html', {'posts': posts, 'club_name':club_oname, 'club_rel':club_name, 'club_photo':club_photo})
 
 
 
 @login_required(login_url="/accounts")
 def post_scraping(request,club_name):
 
-    driver          = webdriver.Firefox()#executable_path="/home/sourav18a/Downloads/geckodriver"
+    driver          = webdriver.Firefox(executable_path="/home/sourav18a/Downloads/geckodriver")#executable_path="/home/sourav18a/Downloads/geckodriver"
 
     driver.get("http://www.facebook.com")
 
@@ -72,6 +84,8 @@ def post_scraping(request,club_name):
     for elem in elem_full:
         tmp         = elem.find_element_by_class_name("_5pcq")
         time        = tmp.text
+        if "hrs" in time:
+            time = time+" ago"
         src         = tmp.get_attribute("href")
         src_elems   = src.split('?')
         left        = src_elems[0]
@@ -82,11 +96,16 @@ def post_scraping(request,club_name):
             uid = left_elems[length-2]
         # check if post has content (whether its an only image post)
         club_oname  = CLUB_NAMES[club_name]
-        post_       = Post.objects.get(club_name__club_name = club_oname, uid = uid)
+        post_       = Post.objects.filter(club_name__club_name = club_oname, uid = uid)
         club_       = Club.objects.get(club_name = club_oname)
-        print(post_.content+'\n')
-        print('\n')
+
+        # print(post_.content+'\n')
+        # print('\n')
         if post_:
+            for post in post_:
+                if post.updated_on!=time:
+                    post.updated_on=time
+                    post.save()
             continue
         else:
             try:
@@ -105,16 +124,15 @@ def post_scraping(request,club_name):
                     content = s,
                 )
                 # new_post.save()
-                print(uid+'\n')
-                print(s+'\n')
+                # print(uid+'\n')
+                # print(s+'\n')
                 data[tmp.text]=tmp2
             except NoSuchElementException:
                 continue
 
 
     driver.close()
-
-    return redirect('club_posts',club_name)
+    return redirect('club',club_name=club_name)
 
 
 # Different methods of waiting in selenium
