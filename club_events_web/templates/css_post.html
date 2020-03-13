@@ -11,20 +11,22 @@
 
 {% block content %}
     <div style="margin-top:150px">
-        {% for time_stamp,post in posts.items %}
+        {% for post in posts %}
             <div class="row m-40 p-10">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-8 p-5 card">
                 <div class="container bg-light display-4" >
-                    <h3>Posted on: {{time_stamp}}</h3><br>
-                        {% for lines in post %}
-                            {% if "http" in lines %}
-                            <a href="{{lines}}">{{lines}}</a>
+                    <h3>Posted on: {{post.updated_on}}</h3><br>
+
+                        {% for line in post.content_as_list %}
+                            {% if "http" in line %}
+                            <a href="{{line}}">{{line}}</a>
                             {% else%}
-                                {{ lines }}
+                                {{ line }}
                             {% endif %}
                             <br>
                         {% endfor %}
+                        <br>
                 </div>
                 </div>
                 <div class="col-sm-2"></div>

@@ -24,15 +24,24 @@ CLUB_NAMES = {
 }
 
 @login_required(login_url="/accounts")
-def club(request,club_name):
+def club_posts(request,club_name):
 
-    driver = webdriver.Firefox(executable_path="/home/sourav18a/Downloads/geckodriver")
+    club_oname  = CLUB_NAMES[club_name]
+    posts       = Post.objects.filter(club_name__club_name = club_oname)
+    return render(request,'css_post.html', {'posts': posts, 'club_name':club_oname})
+
+
+
+@login_required(login_url="/accounts")
+def post_scraping(request,club_name):
+
+    driver          = webdriver.Firefox()#executable_path="/home/sourav18a/Downloads/geckodriver"
 
     driver.get("http://www.facebook.com")
 
-    elem_email = driver.find_element_by_id("email")
+    elem_email      = driver.find_element_by_id("email")
     elem_email.send_keys("7973286902")
-    elem_pass = driver.find_element_by_id("pass")
+    elem_pass       = driver.find_element_by_id("pass")
     elem_pass.send_keys("Jatin1234567890@")
 
     elem_email.send_keys(Keys.RETURN)
@@ -40,7 +49,7 @@ def club(request,club_name):
 
     # wait for sometime for the sssion to know that you have logged in then fetch the club
 
-    element = WebDriverWait(driver,20).until(
+    element         = WebDriverWait(driver,20).until(
 	EC.presence_of_element_located((By.NAME,"q"))
 	)
 
@@ -50,32 +59,32 @@ def club(request,club_name):
 
     # the class _3ixn obscures see mroe link in facebook
 
-    element = WebDriverWait(driver,30).until(
+    element         = WebDriverWait(driver,30).until(
 	EC.invisibility_of_element_located((By.CLASS_NAME,"_3ixn"))
 	)
-    elem_see_mores = driver.find_elements_by_class_name("see_more_link")
+    elem_see_mores  = driver.find_elements_by_class_name("see_more_link")
     for see_more in elem_see_mores:
         see_more.click()
 
-    elem_full = driver.find_elements_by_class_name("_5pcr")
+    elem_full       = driver.find_elements_by_class_name("_5pcr")
 
     data={}
     for elem in elem_full:
-        tmp = elem.find_element_by_class_name("_5pcq")
-        time = tmp.text
-        src = tmp.get_attribute("href")
-        src_elems = src.split('?')
-        left = src_elems[0]
-        left_elems = left.split('/')
-        length = len(left_elems)
-        uid = left_elems[length-1]
+        tmp         = elem.find_element_by_class_name("_5pcq")
+        time        = tmp.text
+        src         = tmp.get_attribute("href")
+        src_elems   = src.split('?')
+        left        = src_elems[0]
+        left_elems  = left.split('/')
+        length      = len(left_elems)
+        uid         = left_elems[length-1]
         if uid=="":
             uid = left_elems[length-2]
         # check if post has content (whether its an only image post)
-        club_oname = CLUB_NAMES[club_name]
-        post_ = Post.objects.filter(club_name__club_name = club_oname, uid = uid)
-        club_ = Club.objects.get(club_name = club_oname)
-        print(club_)
+        club_oname  = CLUB_NAMES[club_name]
+        post_       = Post.objects.get(club_name__club_name = club_oname, uid = uid)
+        club_       = Club.objects.get(club_name = club_oname)
+        print(post_.content+'\n')
         print('\n')
         if post_:
             continue
@@ -105,7 +114,7 @@ def club(request,club_name):
 
     driver.close()
 
-    return render(request, 'css_post.html', {'posts': data, 'club_name':club_oname})
+    return redirect('club_posts',club_name)
 
 
 # Different methods of waiting in selenium

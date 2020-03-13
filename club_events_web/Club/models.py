@@ -24,12 +24,15 @@ class Club(models.Model):
 class Post(models.Model):
 
     uid         = models.CharField(max_length=30)
-    club_name    = models.ForeignKey(Club,on_delete=models.CASCADE)
+    club_name   = models.ForeignKey(Club,on_delete=models.CASCADE)
     updated_on  = models.CharField(max_length=50)
     content     = models.TextField()
 
     class Meta:
-        ordering=['-updated_on']
+        ordering=['updated_on']
+
+    def content_as_list(self):
+        return self.content.split('\n')
 
     def __str__(self):
         return self.content
