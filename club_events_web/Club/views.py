@@ -11,9 +11,9 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 import time
 
-CLUB_NAME = {
+CLUB_NAMES = {
 
-    'codingclubiitg':'Coding Club',
+    "codingclubiitg":"Coding Club",
     'robotics.iitg':'Robotics',
     'electronics.iitg':'Electronics',
     'Aeroiitg':'Aeromodelling',
@@ -58,26 +58,49 @@ def club(request,club_name):
         see_more.click()
 
     elem_full = driver.find_elements_by_class_name("_5pcr")
-    club_oname = CLUB_NAME[club_name]
-    # posts = Post.objects.filter(club_name=club_oname)
+
     data={}
     for elem in elem_full:
-        tmp = elem.find_element_by_class_name("timestampContent")
-
+        tmp = elem.find_element_by_class_name("_5pcq")
+        time = tmp.text
+        src = tmp.get_attribute("href")
+        src_elems = src.split('?')
+        left = src_elems[0]
+        left_elems = left.split('/')
+        length = len(left_elems)
+        uid = left_elems[length-1]
+        if uid=="":
+            uid = left_elems[length-2]
         # check if post has content (whether its an only image post)
-        try:
-            elem.find_element_by_class_name("_5pbx")
-            content=elem.find_element_by_class_name("_5pbx")
-            tmp2 = []
-            title = content.text.split("\n")
-            for tit in title:
-                tmp2.append(tit)
-            s="\n";
-            s = s.join(tmp2)
-            print(s)
-            data[tmp.text]=tmp2
-        except NoSuchElementException:
+        club_oname = CLUB_NAMES[club_name]
+        post_ = Post.objects.filter(club_name__club_name = club_oname, uid = uid)
+        club_ = Club.objects.get(club_name = club_oname)
+        print(club_)
+        print('\n')
+        if post_:
             continue
+        else:
+            try:
+                elem.find_element_by_class_name("_5pbx")
+                content=elem.find_element_by_class_name("_5pbx")
+                tmp2 = []
+                title = content.text.split("\n")
+                for tit in title:
+                    tmp2.append(tit)
+                s="\n";
+                s = s.join(tmp2)
+                new_post = Post.objects.create(
+                    club_name = Club.objects.get(club_name = club_oname),
+                    uid = uid,
+                    updated_on = time,
+                    content = s,
+                )
+                # new_post.save()
+                print(uid+'\n')
+                print(s+'\n')
+                data[tmp.text]=tmp2
+            except NoSuchElementException:
+                continue
 
 
     driver.close()
